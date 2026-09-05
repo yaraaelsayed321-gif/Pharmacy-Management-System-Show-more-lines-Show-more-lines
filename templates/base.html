@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MediCare{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark"><i class="bi bi-capsule"></i></div><div><strong>MediCare</strong><small>Better Health. Better Life.</small></div></div>
+    <nav class="nav flex-column">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i>Dashboard</a>
+      <a class="nav-link" href="{{ url_for('main_menu') }}"><i class="bi bi-command"></i>Main Menu</a>
+      <a class="nav-link" href="{{ url_for('store') }}"><i class="bi bi-shop"></i>Store</a>
+      <a class="nav-link" href="{{ url_for('categories_page') }}"><i class="bi bi-collection"></i>Categories</a>
+      <div class="nav-label">Shop</div>
+      <a class="nav-link" href="{{ url_for('medicines') }}"><i class="bi bi-capsule-pill"></i>Medicines</a>
+      <a class="nav-link" href="{{ url_for('skin_care') }}"><i class="bi bi-droplet"></i>Skin Care</a>
+      <a class="nav-link" href="{{ url_for('hair_care') }}"><i class="bi bi-stars"></i>Hair Care</a>
+      <a class="nav-link" href="{{ url_for('body_care') }}"><i class="bi bi-heart"></i>Body Care</a>
+      <a class="nav-link" href="{{ url_for('mother_child') }}"><i class="bi bi-balloon-heart"></i>Mother & Child</a>
+      <div class="nav-label">Your orders</div>
+      <a class="nav-link" href="{{ url_for('cart_page') }}"><i class="bi bi-bag-check"></i>Cart <span class="badge rounded-pill ms-auto">{{ cart_count }}</span></a>
+      <a class="nav-link" href="{{ url_for('order_history') }}"><i class="bi bi-clock-history"></i>Order History</a>
+      {% if current_role == 'admin' %}
+      <div class="nav-label">Management</div>
+      <a class="nav-link" href="{{ url_for('admin_management') }}"><i class="bi bi-sliders2"></i>Admin Management</a>
+      <a class="nav-link" href="{{ url_for('customer_management') }}"><i class="bi bi-people"></i>Customers</a>
+      <a class="nav-link" href="{{ url_for('stock_management') }}"><i class="bi bi-box-seam"></i>Stock Management</a>
+      <a class="nav-link" href="{{ url_for('reports') }}"><i class="bi bi-bar-chart-line"></i>Reports</a>
+      {% endif %}
+    </nav>
+    <div class="sidebar-footer"><div class="user-chip"><span class="avatar">{{ current_name[:1]|upper }}</span><div><strong>{{ current_name }}</strong><small>{{ current_role|capitalize }} workspace</small></div><a href="{{ url_for('logout') }}" title="Logout"><i class="bi bi-box-arrow-right"></i></a></div></div>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <button class="btn btn-light d-lg-none" id="sidebarToggle" aria-label="Open navigation"><i class="bi bi-list"></i></button>
+      <div class="search-mini"><i class="bi bi-search"></i><form action="{{ url_for('store') }}"><input name="q" placeholder="Search products, orders, customers..." value="{{ request.args.get('q','') }}"></form><span class="d-none d-md-inline" style="font-size:8px;color:#6d9997">⌘ K</span></div>
+      <div class="top-actions"><a href="{{ url_for('dashboard') }}" class="icon-btn d-none d-md-grid" title="Dashboard"><i class="bi bi-grid"></i></a><a href="{{ url_for('cart_page') }}" class="icon-btn"><i class="bi bi-bag-check"></i><span>{{ cart_count }}</span></a><div class="profile-dot">{{ current_name[:1]|upper }}</div></div>
+    </header>
+    <div class="page-body">
+      {% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category,message in messages %}<div class="alert alert-{{ category }} alert-dismissible fade show">{{ message }}<button class="btn-close" data-bs-dismiss="alert"></button></div>{% endfor %}</div>{% endif %}{% endwith %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>{% block scripts %}{% endblock %}
+</body></html>

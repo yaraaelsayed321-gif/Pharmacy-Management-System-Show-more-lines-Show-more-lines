@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History · MediCare{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <div>
+        <span class="eyebrow">Orders</span>
+        <h1>Order History</h1>
+        <p>Search the order records maintained by OrderManager.</p>
+    </div>
+</div>
+
+<form class="filter-bar" method="get">
+    <div class="input-group">
+        <span class="input-group-text">
+            <i class="bi bi-telephone"></i>
+        </span>
+
+        <input class="form-control"
+               name="phone"
+               value="{{ phone }}"
+               placeholder="Search by customer phone">
+
+        <button class="btn btn-primary">
+            Search
+        </button>
+    </div>
+</form>
+
+{% for o in orders %}
+
+<div class="panel order-card">
+
+    <div class="order-head">
+        <div>
+            <span class="category-tag">
+                {{ o["order_id"] }}
+            </span>
+
+            <h3>
+                {{ o["customer"]["name"] }}
+            </h3>
+
+            <small>
+                {{ o["customer"]["phone"] }}
+                ·
+                {{ o["customer"]["address"]["city"] }},
+                {{ o["customer"]["address"]["governorate"] }}
+            </small>
+        </div>
+
+        <strong>
+            {{ "%.2f"|format(o["total_amount"]) }} EGP
+        </strong>
+    </div>
+
+    <div class="order-items">
+        {% for i in o["items"] %}
+            <span>
+                {{ i["product"] }} × {{ i["quantity"] }}
+            </span>
+        {% endfor %}
+    </div>
+
+    <div class="order-foot">
+        <span>
+            <i class="bi bi-credit-card me-1"></i>
+            {{ o["customer"]["payment_method"] }}
+        </span>
+
+         }}">
+            View order
+        </a>
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="empty-state wide">
+    <i class="bi bi-clock-history"></i>
+    <strong>No orders found</strong>
+    <span>Completed orders will appear here.</span>
+</div>
+
+{% endfor %}
+
+{% endblock %}
