@@ -12,6 +12,14 @@ class AdminProductManager:
             + self.store.bodycare
             + self.store.mother_and_child
         )
+    def save_products(self):
+        with open("products.json", "w", encoding="utf-8") as f:
+            json.dump(
+                self.products(),
+                f,
+                indent=4,
+                ensure_ascii=False
+            )
 
     def add(self):
         id = int(input("ID: "))
@@ -50,6 +58,7 @@ class AdminProductManager:
             "description": description
         })
 
+        self.save_products()
         print("ADDED SUCCESSFULLY")
 
     def delete(self):
@@ -66,19 +75,12 @@ class AdminProductManager:
             for product in category:
                 if product["id"] == id:
                     category.remove(product)
+                    self.save_products()
                     print("Deleted")
                     return
 
         print("SORRY, Not found")
 
-    def save_products(self):
-        with open("products.json", "w", encoding="utf-8") as f:
-            json.dump(
-                self.products(),
-                f,
-                indent=4,
-                ensure_ascii=False
-            )
 
     def update(self):
         id = int(input("Product ID: "))

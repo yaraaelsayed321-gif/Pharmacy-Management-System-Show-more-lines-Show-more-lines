@@ -2,7 +2,7 @@
     {
         "id": 101,
         "name": "Panadol Extra",
-        "price": 35.0,
+        "price": 25.0,
         "stock": 25,
         "expiry_date": "2028-05-10",
         "description": "Analgesic and antipyretic containing paracetamol and caffeine."

@@ -117,24 +117,3 @@ class OrderManager:
 
         if not found:
             print(" No previous orders found for this phone number.")
-
-    
-# manager = OrderManager()
-
-#     # 2. محاكاة سلة مشتريات القادمة من الشخص الرابع (Dummy Cart)
-# dummy_cart = [
-#         {"name": "Panadol Extra", "price": 25, "quantity": 2},
-#         {"name": "Moist One Cream", "price": 85, "quantity": 1},
-#     ]
-
-# print("--- STARTING TEST ---")
-
-#     # 3. تجربة جمع بيانات الشراء والتوصيل
-# user_info = manager.collect_checkout_info()
-
-#     # 4. تجربة تأكيد وإنشاء الأوردر
-# manager.create_order(user_info, dummy_cart)
-
-#     # 5. تجربة عرض سجل طلبات العميل
-# manager.view_customer_order_history(user_info["phone"])
-
