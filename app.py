@@ -140,7 +140,7 @@ def globals_for_templates():
 
 @app.route("/")
 def index():
-    return redirect(url_for("login")) if not login_required() else redirect(url_for("dashboard"))
+    return redirect(url_for("login")) if not login_required() else redirect(url_for("main_menu"))
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -152,13 +152,13 @@ def login():
             password = request.form.get("password", "")
             if username == "admin" and password == "1234":
                 session.update(role="admin", name="Administrator")
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("main_menu"))
             flash("Invalid administrator credentials.", "danger")
         else:
             name = request.form.get("name", "").strip()
             if name:
                 session.update(role="user", name=name)
-                return redirect(url_for("dashboard"))
+                return redirect(url_for("main_menu"))
             flash("Name cannot be empty.", "warning")
     return render_template("login.html")
 
@@ -171,14 +171,21 @@ def logout():
 
 @app.route("/dashboard")
 def dashboard():
-    if not login_required(): return redirect(url_for("login"))
+    if not admin_required():
+        abort(403)
+
     products = all_products()
     orders = OrderManager.orders_list
     revenue = sum(o["total_amount"] for o in orders)
-    return render_template("dashboard.html", products=products, orders=orders, revenue=revenue,
-                           low_stock=low_stock_products(), expired=expired_products())
 
-
+    return render_template(
+        "dashboard.html",
+        products=products,
+        orders=orders,
+        revenue=revenue,
+        low_stock=low_stock_products(),
+        expired=expired_products()
+    )
 @app.route("/main-menu")
 def main_menu():
     if not login_required(): return redirect(url_for("login"))

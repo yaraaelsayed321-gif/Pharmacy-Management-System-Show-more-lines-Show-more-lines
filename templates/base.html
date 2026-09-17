@@ -13,7 +13,6 @@
     <div class="brand"><div class="brand-mark"><i class="bi bi-capsule"></i></div><div><strong>MediCare</strong><small>Better Health. Better Life.</small></div></div>
     <nav class="nav flex-column">
       <div class="nav-label">Workspace</div>
-      <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i>Dashboard</a>
       <a class="nav-link" href="{{ url_for('main_menu') }}"><i class="bi bi-command"></i>Main Menu</a>
       <a class="nav-link" href="{{ url_for('store') }}"><i class="bi bi-shop"></i>Store</a>
       <a class="nav-link" href="{{ url_for('categories_page') }}"><i class="bi bi-collection"></i>Categories</a>
@@ -28,6 +27,7 @@
       <a class="nav-link" href="{{ url_for('order_history') }}"><i class="bi bi-clock-history"></i>Order History</a>
       {% if current_role == 'admin' %}
       <div class="nav-label">Management</div>
+      <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="bi bi-grid-1x2-fill"></i>Dashboard</a>
       <a class="nav-link" href="{{ url_for('admin_management') }}"><i class="bi bi-sliders2"></i>Admin Management</a>
       <a class="nav-link" href="{{ url_for('customer_management') }}"><i class="bi bi-people"></i>Customers</a>
       <a class="nav-link" href="{{ url_for('stock_management') }}"><i class="bi bi-box-seam"></i>Stock Management</a>
